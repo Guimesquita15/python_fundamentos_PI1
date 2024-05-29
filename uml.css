@@ -1,0 +1,86 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0e0e0e;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2em;
+}
+
+.section {
+    margin-bottom: 2em;
+}
+
+.section-title {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    color: #F62C07;
+}
+
+.lucid-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2%;
+    margin-top: 1.6em;
+    margin-bottom: 0.9em;
+}
+
+.lucid-iframe {
+    position: relative;
+    width: 48%;
+    height: 0;
+    padding-top: 56.2225%;
+    padding-bottom: 0;
+    box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+    overflow: hidden;
+    border-radius: 8px;
+    will-change: transform;
+}
+
+.lucid-iframe iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
+}
+
+.canva-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 56.2225%;
+    padding-bottom: 0;
+    box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+    margin-top: 1.6em;
+    margin-bottom: 0.9em;
+    overflow: hidden;
+    border-radius: 8px;
+    will-change: transform;
+}
+
+.canva-container iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: #780202;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
