@@ -7,8 +7,8 @@ body {
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1250px;
+    margin: auto;
     padding: 2em;
 }
 
@@ -17,38 +17,31 @@ body {
 }
 
 .section-title {
-    font-size: 1.5em;
+    font-size: 20px;
     margin-bottom: 0.5em;
     color: #F62C07;
 }
 
 .lucid-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 2%;
     margin-top: 1.6em;
     margin-bottom: 0.9em;
 }
 
-.lucid-iframe {
-    position: relative;
-    width: 48%;
-    height: 0;
-    padding-top: 56.2225%;
-    padding-bottom: 0;
-    box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
-    overflow: hidden;
-    border-radius: 8px;
-    will-change: transform;
+.lucid-container a {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
-.lucid-iframe iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    border: none;
+.lucid-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+    will-change: transform;
 }
 
 .canva-container {

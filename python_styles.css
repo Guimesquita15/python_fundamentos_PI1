@@ -5,15 +5,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff3f3;
+  background-color: #FFD43B;
 }
 
-header {
-  background-color: #323232;
-  width: 100%;
-  padding: 20px 0;
-  text-align: center;
-  color: white;
+h1{
+  color: rgb(0, 0, 0);
+  font-size: 45px;
 }
 
 .card-container {
