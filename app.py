@@ -55,6 +55,7 @@ class Cinema:
         return self.pacotes.get(tipo_pacote, 0.0)
 
 
+
 cinema = Cinema()
 cinema.adicionar_filme(Filme("O Exterminador Implacável", "Ação/Ficção científica", ["18:00", "20:00", "23:30"]), Sala(1, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], 14))
 cinema.adicionar_filme(Filme("Titanic", "Romance/Drama", ["12:00","15:00", "20:00"]), Sala(2, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], 14))
