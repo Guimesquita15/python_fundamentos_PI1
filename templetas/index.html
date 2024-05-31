@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema</title>
+</head>
+<body>
+    <h1>Filmes em Cartaz</h1>
+    <form action="/escolher_assento" method="post">
+        <label for="titulo_filme">Escolha um filme:</label>
+        <select name="titulo_filme" id="titulo_filme" onchange="updateHorarios()">
+            {% for filme in filmes %}
+            <option value="{{ filme.titulo }}">{{ filme.titulo }}</option>
+            {% endfor %}
+        </select><br>
+        
+        <label for="horario">Escolha o horário:</label>
+        <select name="horario" id="horario">
+            {% for horario in horarios_por_filme[filmes[0].titulo] %}
+            <option value="{{ horario }}">{{ horario }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="fila">Escolha a fila:</label>
+        <input type="text" name="fila" id="fila"><br>
+        
+        <label for="assento">Escolha o assento:</label>
+        <input type="number" name="assento" id="assento"><br>
+        
+        <button type="submit">Reservar Assento</button>
+    </form>
+
+    {% if mensagem %}
+    <p>{{ mensagem }}</p>
+    {% endif %}
+
+    <script>
+        function updateHorarios() {
+            var filmeTitulo = document.getElementById("titulo_filme").value;
+            // var horarios = {{ horarios_por_filme | tojson }};
+            var horarioSelect = document.getElementById("horario");
+            horarioSelect.innerHTML = "";
+
+            horarios[filmeTitulo].forEach(function(horario) {
+                var option = document.createElement("option");
+                option.value = horario;
+                option.text = horario;
+                horarioSelect.add(option);
+            });
+        
+
+        // Atualizar os horários ao carregar a página
+        window.onload = function() {
+            updateHorarios();
+        }
+    }
+    </script>
+</body>
+</html>
