@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/cinemaniabanner.jpg') }}" alt="Logo do Cinema">
+        </div>
+    </header>
+    <div class="titulo-container">
+        <h1 class="titulo"><br> Filmes em Cartaz</h1>
+    </div>
+    <div class="cartaz-filmes">
+        {% for filme in filmes %}
+        <div class="filme-cartaz-item">
+            <div class="card">
+                {% set img_file_jpg = 'img/' + filme.titulo|replace(' ', '_')|lower + '.jpg' %}
+                {% set img_file_webp = 'img/' + filme.titulo|replace(' ', '_')|lower + '.webp' %}
+                {% if img_exists(img_file_jpg) %}
+                <img src="{{ url_for('static', filename=img_file_jpg) }}" alt="{{ filme.titulo }} imagem" class="filme-cartaz-imagem">
+                {% elif img_exists(img_file_webp) %}
+                <img src="{{ url_for('static', filename=img_file_webp) }}" alt="{{ filme.titulo }} imagem" class="filme-cartaz-imagem">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Imagem não disponível" class="filme-cartaz-imagem">
+                {% endif %}
+                <h2>{{ filme.titulo }}</h2>
+                <p>{{ filme.descricao }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Formulario -->
+    <form action="/escolher_assento" method="POST">
+        <label for="titulo_filme">Escolha o filme:</label>
+        <select name="titulo_filme" id="titulo_filme" required onchange="atualizarHorarios()">
+            <option value="">Selecione um filme...</option>
+            {% for filme in filmes %}
+            <option value="{{ filme.titulo }}">{{ filme.titulo }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="horario">Escolha o horário:</label>
+        <select name="horario" id="horario" required>
+            <option value="">Selecione um horário...</option>
+        </select>
+
+        <label for="fila">Escolha a fila:</label>
+        <select id="fila" name="fila" required>
+            <option value="">Selecione uma fila...</option>
+            {% for fila in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] %}
+            <option value="{{ fila }}">{{ fila }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="assento">Escolha o assento:</label>
+        <input type="number" id="assento" name="assento" min="1" max="14" required>
+
+        <label for="tipo_pacote">Escolha o tipo de pacote:</label>
+        <select name="tipo_pacote" id="tipo_pacote" required>
+            <option value="pequeno">Pequeno - 6.20€</option>
+            <option value="grande">Grande - 8.40€</option>
+            <option value="estudante">Estudante - 6.50€</option>
+        </select>
+        <br>
+        <button type="submit">Reservar Assento</button>
+    </form>
+
+    {% if mensagem %}
+    <p>{{ mensagem }}</p>
+    {% endif %}
+
+    <script>
+        var horariosPorFilme = {{ horarios_por_filme | tojson }};
+        
+        function atualizarHorarios() {
+            var tituloFilme = document.getElementById("titulo_filme").value;
+            var horarios = horariosPorFilme[tituloFilme] || [];
+            var horarioSelect = document.getElementById("horario");
+            horarioSelect.innerHTML = "";
+
+            var defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "Escolha um horário...";
+            horarioSelect.add(defaultOption);
+
+            horarios.forEach(function(horario) {
+                var option = document.createElement("option");
+                option.value = horario;
+                option.text = horario;
+                horarioSelect.add(option);
+            });
+        }
+    </script>
+</body>
+</html>
