@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilhete de Cinema</title>
+    <title>Confirmação de Reserva</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>{{ mensagem }}</h1>
-    <p>Filme: {{ titulo_filme }}</p>
-    <p>Horário: {{ horario }}</p>
+    <div class="container">
+        <p>{{ mensagem }}</p>
+        <p>Filme: {{ titulo_filme }}</p>
+        <p>Horário: {{ horario }}</p>
+    </div>
 </body>
 </html>

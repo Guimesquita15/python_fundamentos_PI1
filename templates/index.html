@@ -36,65 +36,69 @@
     </div>
 
     <!-- Formulario -->
+   <h1 style="text-align: center;">Formulário de reserva</h1>
     <form action="/escolher_assento" method="POST">
-        <label for="titulo_filme">Escolha o filme:</label>
-        <select name="titulo_filme" id="titulo_filme" required onchange="atualizarHorarios()">
-            <option value="">Selecione um filme...</option>
-            {% for filme in filmes %}
-            <option value="{{ filme.titulo }}">{{ filme.titulo }}</option>
-            {% endfor %}
-        </select>
+        <div class="form-group">
+            <label for="titulo_filme">Que filme deseja assistir?</label>
+            <select name="titulo_filme" id="titulo_filme" required onchange="atualizarHorarios()">
+                <option value="">--------</option>
+                {% for filme in filmes %}
+                <option value="{{ filme.titulo }}">{{ filme.titulo }}</option>
+                {% endfor %}
+            </select>
+        </div>
         
-        <label for="horario">Escolha o horário:</label>
-        <select name="horario" id="horario" required>
-            <option value="">Selecione um horário...</option>
-        </select>
-
-        <label for="fila">Escolha a fila:</label>
-        <select id="fila" name="fila" required>
-            <option value="">Selecione uma fila...</option>
-            {% for fila in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] %}
-            <option value="{{ fila }}">{{ fila }}</option>
-            {% endfor %}
-        </select>
-
-        <label for="assento">Escolha o assento:</label>
-        <input type="number" id="assento" name="assento" min="1" max="14" required>
-
-        <label for="tipo_pacote">Escolha o tipo de pacote:</label>
-        <select name="tipo_pacote" id="tipo_pacote" required>
-            <option value="pequeno">Pequeno - 6.20€</option>
-            <option value="grande">Grande - 8.40€</option>
-            <option value="estudante">Estudante - 6.50€</option>
-        </select>
-        <br>
+        <div class="form-group">
+            <label for="horario">Escolha o horário:</label>
+            <select name="horario" id="horario" required>
+                <option value="">Selecione o filme</option>
+            </select>
+        </div>
+    
+        <div class="form-group">
+            <label for="fila">Escolha a fila:</label>
+            <select id="fila" name="fila" required>
+                <option value="">---</option>
+                {% for fila in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'] %}
+                <option value="{{ fila }}">{{ fila }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <div class="form-group">
+            <label for="assento">Escolha o assento:</label>
+            <input type="number" id="assento" name="assento" min="1" max="18" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="tipo_pacote">Escolha o tipo de pacote:</label>
+            <select name="tipo_pacote" id="tipo_pacote" >
+                <option value="">Selecione um pacote...</option>
+                <option value="pequeno">Pequeno - 6,20€</option>
+                <option value="grande">Grande - 8,40€</option>
+                <option value="estudante">Estudante - 6,50€</option>
+            </select>
+        </div>
+    
         <button type="submit">Reservar Assento</button>
     </form>
-
-    {% if mensagem %}
-    <p>{{ mensagem }}</p>
-    {% endif %}
-
+    
     <script>
-        var horariosPorFilme = {{ horarios_por_filme | tojson }};
-        
         function atualizarHorarios() {
-            var tituloFilme = document.getElementById("titulo_filme").value;
-            var horarios = horariosPorFilme[tituloFilme] || [];
-            var horarioSelect = document.getElementById("horario");
-            horarioSelect.innerHTML = "";
+            const horariosPorFilme = {{ horarios_por_filme|tojson }};
+            const tituloFilme = document.getElementById("titulo_filme").value;
+            const horarioSelect = document.getElementById("horario");
+            
+            horarioSelect.innerHTML = '<option value="">--:--</option>';
 
-            var defaultOption = document.createElement("option");
-            defaultOption.value = "";
-            defaultOption.text = "Escolha um horário...";
-            horarioSelect.add(defaultOption);
-
-            horarios.forEach(function(horario) {
-                var option = document.createElement("option");
-                option.value = horario;
-                option.text = horario;
-                horarioSelect.add(option);
-            });
+            if (tituloFilme && horariosPorFilme[tituloFilme]) {
+                horariosPorFilme[tituloFilme].forEach(horario => {
+                    const option = document.createElement("option");
+                    option.value = horario;
+                    option.text = horario;
+                    horarioSelect.appendChild(option);
+                });
+            }
         }
     </script>
 </body>

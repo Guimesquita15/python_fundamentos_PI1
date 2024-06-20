@@ -6,7 +6,6 @@ app = Flask(__name__)
 def img_exists(img_path):
     return os.path.exists(os.path.join(app.static_folder, img_path))
 
-# Adicionar a função img_exists ao contexto do Jinja2
 app.jinja_env.globals['img_exists'] = img_exists
 
 class Filme:
@@ -52,10 +51,10 @@ class Cinema:
         return self.pacotes.get(tipo_pacote, 0.0)
 
 cinema = Cinema()
-cinema.adicionar_filme(Filme("O Exterminador Implacável", "Ação/Ficção científica", ["18:00", "20:00", "23:30"]), Sala(1, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], 14))
-cinema.adicionar_filme(Filme("Titanic", "Romance/Drama", ["12:00", "15:00", "20:00"]), Sala(2, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], 14))
-cinema.adicionar_filme(Filme("O Rei Leão", "Animação/Aventura", ["09:45", "14:30", "16:00"]), Sala(3, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], 14))
-cinema.adicionar_filme(Filme("Homem-Aranha", "Ação/Aventura", ["13:30", "17:40", "21:00"]), Sala(4, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'], 14))
+cinema.adicionar_filme(Filme("O Exterminador Implacável", "Ação/Ficção científica", ["18:00", "20:00", "23:30"]), Sala(1, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'], 18))
+cinema.adicionar_filme(Filme("Titanic", "Romance/Drama", ["12:00", "15:00", "20:00"]), Sala(2, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'], 18))
+cinema.adicionar_filme(Filme("O Rei Leão", "Animação/Aventura", ["09:45", "14:30", "16:00"]), Sala(3, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'], 18))
+cinema.adicionar_filme(Filme("Homem-Aranha", "Ação/Aventura", ["13:30", "17:40", "21:00"]), Sala(4, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'], 18))
 
 @app.route('/')
 def index():
@@ -79,10 +78,10 @@ def escolher_assento():
         if sala.escolher_assento(fila, assento):
             preco_pacote = cinema.obter_preco_pacote(tipo_pacote)
             preco_total = 10.0 + preco_pacote  # Preço base do ingresso
-            mensagem = f"Assento reservado com sucesso! Boa sessão! Preço total: {preco_total:.2f}€"
+            mensagem = f"Assento reservado com sucesso!  Preço total: {preco_total:.2f}€ Boa sessão!"
             return render_template('bilhete.html', titulo_filme=titulo_filme, horario=horario, mensagem=mensagem)
         else:
-            return "Assento já está reservado. Tente outro assento."
+            return "Assento indisponivel ou ocupado. Por favor, escolha outro assento."
     return "Falha na reserva do assento. Tente novamente."
 
 if __name__ == '__main__':
