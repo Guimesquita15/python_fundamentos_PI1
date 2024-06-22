@@ -74,6 +74,7 @@
             <label for="tipo_pacote">Escolha o tipo de pacote:</label>
             <select name="tipo_pacote" id="tipo_pacote" >
                 <option value="">Selecione um pacote...</option>
+                <option value="">Apenas Bilhete - 4,50€</option>
                 <option value="pequeno">Pequeno - 6,20€</option>
                 <option value="grande">Grande - 8,40€</option>
                 <option value="estudante">Estudante - 6,50€</option>
@@ -82,6 +83,18 @@
     
         <button type="submit">Reservar Assento</button>
     </form>
+
+    <!-- Mostrar mensagem de erro (Flash) -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
     
     <script>
         function atualizarHorarios() {

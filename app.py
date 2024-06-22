@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 def img_exists(img_path):
     return os.path.exists(os.path.join(app.static_folder, img_path))
@@ -32,6 +33,7 @@ class Cinema:
         self.filmes = []
         self.salas = {}
         self.pacotes = {
+            'bilhete': 0.00,
             'pequeno': 6.20,
             'grande': 8.40,
             'estudante': 6.50
@@ -43,7 +45,7 @@ class Cinema:
 
     def escolher_filme(self, titulo):
         for filme in self.filmes:
-            if filme.titulo == titulo:
+            if (filme.titulo == titulo):
                 return filme
         return None
 
@@ -77,12 +79,18 @@ def escolher_assento():
         sala = cinema.salas[filme.titulo]
         if sala.escolher_assento(fila, assento):
             preco_pacote = cinema.obter_preco_pacote(tipo_pacote)
-            preco_total = 10.0 + preco_pacote  # Preço base do ingresso
-            mensagem = f"Assento reservado com sucesso!  Preço total: {preco_total:.2f}€ Boa sessão!"
+            preco_total = 4.50 + preco_pacote  # Preço base do ingresso
+            mensagem = f"Assento reservado com sucesso! Preço total: {preco_total:.2f}€ Boa sessão!"
             return render_template('bilhete.html', titulo_filme=titulo_filme, horario=horario, mensagem=mensagem)
         else:
-            return "Assento indisponivel ou ocupado. Por favor, escolha outro assento."
-    return "Falha na reserva do assento. Tente novamente."
+            flash("Assento indisponível ou ocupado. Por favor, escolha outro assento.")
+            filmes = cinema.filmes
+            horarios_por_filme = {filme.titulo: filme.horarios for filme in filmes}
+            return render_template('index.html', filmes=filmes, horarios_por_filme=horarios_por_filme)
+    flash("Falha na reserva do assento. Tente novamente.")
+    filmes = cinema.filmes
+    horarios_por_filme = {filme.titulo: filme.horarios for filme in filmes}
+    return render_template('index.html', filmes=filmes, horarios_por_filme=horarios_por_filme)
 
 if __name__ == '__main__':
     app.run(debug=True)
